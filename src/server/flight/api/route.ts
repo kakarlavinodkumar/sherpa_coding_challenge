@@ -1,7 +1,7 @@
 import express from "express";
 
-import { getFlightsService, getFlightByIDService, createFlightService, updateFlightService } from "../service/flightservice";
-import { getFlightsPayload, getFlightByIDPayload, createFlightPayload, createFlightResponse, getFlightsResponse, getFlightByIDResponse, updateFlightPayload, updateFlightResponse } from "../struct";
+import { getFlightsService, getFlightByIDService, createFlightService, updateFlightService, deleteFlightService } from "../service/flightservice";
+import { getFlightsPayload, getFlightByIDPayload, createFlightPayload, createFlightResponse, getFlightsResponse, getFlightByIDResponse, updateFlightPayload, updateFlightResponse, deleteFlightPayload, deleteFlightResponse } from "../struct";
 import { HTTP_RESPONSE_CODES } from "../../../appconstants/httpresponsecodes";
 
 const router = express.Router();
@@ -69,6 +69,22 @@ router.patch("/", async (req, res) => {
         return res.json(response);
     } catch (err: any) {
         res.status(err.code || HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: err.message || "Error occurred while updating data" });
+    }
+});
+
+// Delete Flight
+router.delete("/", async (req, res) => { 
+    try {
+        // Payload
+        const payload: deleteFlightPayload = req.body;
+
+        // Service call
+        const response: deleteFlightResponse = await deleteFlightService(payload);
+
+        // Response
+        return res.json(response);
+    } catch (err: any) {
+        res.status(err.code || HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: err.message || "Error occurred while deleting data" });
     }
 });
 

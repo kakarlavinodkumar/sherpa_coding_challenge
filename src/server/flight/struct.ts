@@ -28,6 +28,10 @@ export interface updateFlightPayload {
     arrivalTime: string; // Arrival time in ISO format
 }
 
+export interface deleteFlightPayload {
+    _id: string; // Flight ID to be deleted
+}
+
 // Create Flight Response
 export interface createFlightResponse {
     flight_id: string; // ID of the created flight
@@ -57,5 +61,10 @@ export interface getFlightByIDResponse {
 
 export interface updateFlightResponse {
     flight_id: string; // ID of the updated flight
+    message: string; // Success message
+}
+
+export interface deleteFlightResponse {
+    _id: string; // ID of the deleted flight
     message: string; // Success message
 }

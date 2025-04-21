@@ -50,3 +50,14 @@ export const updateFlightByIDInDB = async (payload: any) => {
     // Response
     return flight;
 };
+
+// Delete flight by ID
+export const deleteFlightByIDInDB = async (payload: any) => {
+    // DB logic
+
+    // DB operation
+    const flight = await db.models.Flight.findByIdAndDelete(payload._id);
+
+    // Response
+    return flight;
+}

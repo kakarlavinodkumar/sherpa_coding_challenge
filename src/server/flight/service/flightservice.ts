@@ -1,5 +1,5 @@
-import { createFlightResponse, getFlightByIDPayload, getFlightByIDResponse, getFlightsPayload, getFlightsResponse, updateFlightPayload, updateFlightResponse } from "../struct";
-import { fetchFlightsFromDB, fetchFlightByIDFromDB, updateFlightByIDInDB } from "../db/dbservice";
+import { createFlightResponse, deleteFlightPayload, deleteFlightResponse, getFlightByIDPayload, getFlightByIDResponse, getFlightsPayload, getFlightsResponse, updateFlightPayload, updateFlightResponse } from "../struct";
+import { fetchFlightsFromDB, fetchFlightByIDFromDB, updateFlightByIDInDB, deleteFlightByIDInDB } from "../db/dbservice";
 import { createFlightPayload } from "../struct";
 import { saveFlightToDB } from "../db/dbservice";
 
@@ -78,6 +78,28 @@ export const updateFlightService = async (payload: updateFlightPayload): Promise
     const response: updateFlightResponse = {
         flight_id: flight._id,
         message: "Flight updated successfully"
+    };
+    return response;
+};
+
+export const deleteFlightService = async (payload: deleteFlightPayload): Promise<deleteFlightResponse> => {
+    // Payload destructuring
+    const { _id } = payload;
+    
+    // Payload validation
+    if (!_id) {
+        throw new Error("_id is required");
+    }
+
+    // Business logic
+
+    // Call DB service
+    const flight = await deleteFlightByIDInDB(payload);
+
+    // Response
+    const response: deleteFlightResponse = {
+        _id: flight._id,
+        message: "Flight deleted successfully"
     };
     return response;
 };
