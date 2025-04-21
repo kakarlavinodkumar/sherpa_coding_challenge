@@ -26,10 +26,19 @@ export const getMongoDBConnection = (): mongoose.Connection => {
         destination: { type: String, required: true },
         departureTime: { type: Date, required: true },
         arrivalTime: { type: Date, required: true },
-    });
+    }, { timestamps: true });
 
     if(!mongoose.models.Flight) {
         mongoose.model('Flight', FlightSchema);
+    }
+
+    const MessageSchema = new mongoose.Schema({
+        message: { type: String, required: true },
+        flight_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Flight' },
+    }, { timestamps: true });
+
+    if(!mongoose.models.Message) {
+        mongoose.model('Message', MessageSchema);
     }
 
     mongoose.connect(uri)

@@ -39,7 +39,8 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
                     }
                 }
             },
-            apis: ["./src/server/flight/api/*.ts"], 
+            apis: ["./src/server/flight/api/*.ts", "./src/server/message/api/*.ts"], 
+
         };
 
         const swaggerDocs = swaggerJsDoc(swaggerOptions);
