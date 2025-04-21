@@ -6,7 +6,8 @@ import masterRouter from "./server/route"
 export const start = async (): Promise<Server> => new Promise(async (resolve, reject) => {
     try {
         const port = 4040
-        const app = express()
+        const app = express();
+        app.use(express.json());
         const db = getDBConnection()
         // app.use('/', isAuthenticated) --> middleware authentication check
         // add routing for master route for api's
