@@ -1,9 +1,12 @@
 import express from "express"
 import {Server} from "http";
-import {getDBConnection} from "./database";
-import masterRouter from "./server/route"
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+
+import {getDBConnection} from "./database";
+import masterRouter from "./server/route"
+import { SWAGGER_SCHEMA } from "./swagger/schema";
+import { BASE_PATH } from "./appconstants/constants";
 
 export const start = async (): Promise<Server> => new Promise(async (resolve, reject) => {
     try {
@@ -27,9 +30,14 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
                 },
                 servers: [
                     {
-                        url: "http://localhost:4040/api",
+                        url: BASE_PATH,
                     },
                 ],
+                components: {
+                    schemas: {
+                        ...SWAGGER_SCHEMA
+                    }
+                }
             },
             apis: ["./src/server/flight/api/*.ts"], 
         };
