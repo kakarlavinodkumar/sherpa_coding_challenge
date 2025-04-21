@@ -1,5 +1,5 @@
-import { createFlightResponse, getFlightByIDPayload, getFlightByIDResponse, getFlightsPayload, getFlightsResponse } from "../struct";
-import { fetchFlightsFromDB, fetchFlightByIDFromDB } from "../db/dbservice";
+import { createFlightResponse, getFlightByIDPayload, getFlightByIDResponse, getFlightsPayload, getFlightsResponse, updateFlightPayload, updateFlightResponse } from "../struct";
+import { fetchFlightsFromDB, fetchFlightByIDFromDB, updateFlightByIDInDB } from "../db/dbservice";
 import { createFlightPayload } from "../struct";
 import { saveFlightToDB } from "../db/dbservice";
 
@@ -58,4 +58,26 @@ export const getFlightByIDService = async (payload: getFlightByIDPayload): Promi
 
     // Response
     return flight;
+};
+
+export const updateFlightService = async (payload: updateFlightPayload): Promise<updateFlightResponse> => {
+    // Payload destructuring
+    const { _id, flightNumber, airline, departure, destination, departureTime, arrivalTime } = payload;
+    
+    // Payload validation
+    if (!_id || !flightNumber || !airline || !departure || !destination || !departureTime || !arrivalTime) {
+        throw new Error("All fields are required");
+    }
+
+    // Business logic
+
+    // Call DB service
+    const flight = await updateFlightByIDInDB(payload);
+
+    // Response
+    const response: updateFlightResponse = {
+        flight_id: flight._id,
+        message: "Flight updated successfully"
+    };
+    return response;
 };

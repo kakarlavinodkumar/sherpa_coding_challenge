@@ -39,3 +39,14 @@ export const fetchFlightByIDFromDB = async (payload: getFlightByIDPayload) => {
     // Response
     return flight;
 };
+
+// Update flight by ID
+export const updateFlightByIDInDB = async (payload: any) => {
+    // DB logic
+
+    // DB operation
+    const flight = await db.models.Flight.findByIdAndUpdate(payload._id, payload);
+
+    // Response
+    return flight;
+};

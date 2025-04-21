@@ -18,6 +18,16 @@ export interface getFlightByIDPayload {
     id: string;
 }
 
+export interface updateFlightPayload {
+    _id: string; // Flight ID
+    flightNumber: string; // Flight number
+    airline: string; // Airline name
+    departure: string; // Departure location
+    destination: string; // Destination location
+    departureTime: string; // Departure time in ISO format
+    arrivalTime: string; // Arrival time in ISO format
+}
+
 // Create Flight Response
 export interface createFlightResponse {
     flight_id: string; // ID of the created flight
@@ -43,4 +53,9 @@ export interface getFlightByIDResponse {
     destination: string; // Destination location
     departureTime: string; // Departure time in ISO format
     arrivalTime: string; // Arrival time in ISO format
+}
+
+export interface updateFlightResponse {
+    flight_id: string; // ID of the updated flight
+    message: string; // Success message
 }

@@ -1,7 +1,7 @@
 import express from "express";
 
-import { getFlightsService, getFlightByIDService, createFlightService } from "../service/flightservice";
-import { getFlightsPayload, getFlightByIDPayload, createFlightPayload, createFlightResponse, getFlightsResponse, getFlightByIDResponse } from "../struct";
+import { getFlightsService, getFlightByIDService, createFlightService, updateFlightService } from "../service/flightservice";
+import { getFlightsPayload, getFlightByIDPayload, createFlightPayload, createFlightResponse, getFlightsResponse, getFlightByIDResponse, updateFlightPayload, updateFlightResponse } from "../struct";
 import { HTTP_RESPONSE_CODES } from "../../../appconstants/httpresponsecodes";
 
 const router = express.Router();
@@ -53,6 +53,22 @@ router.get("/:flightId", async (req, res) => {
         return res.json(response);
     } catch (err: any) {
         res.status(err.code || HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: err.message || "Error occurred while getting data" });
+    }
+});
+
+// Update Flight
+router.patch("/", async (req, res) => { 
+    try {
+        // Payload
+        const payload: updateFlightPayload = req.body;
+
+        // Service call
+        const response: updateFlightResponse = await updateFlightService(payload);
+
+        // Response
+        return res.json(response);
+    } catch (err: any) {
+        res.status(err.code || HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: err.message || "Error occurred while updating data" });
     }
 });
 
