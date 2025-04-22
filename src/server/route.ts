@@ -12,8 +12,8 @@ const router = express.Router();
 // routing for event api's
 router.use("/events", eventRoute);
 router.use("/flights", flightRoutes);
-router.use("/message", messageRoutes);
-router.use("/flightevent", flightEventRoutes);
+router.use("/messages", messageRoutes);
+router.use("/flightevents", flightEventRoutes);
 // router.use("/another_route", anotherRoute); 
 
 export default router;

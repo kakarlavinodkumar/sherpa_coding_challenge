@@ -34,7 +34,7 @@ export const fetchFlightEventByIDFromDB = async (payload: GetFlightEventByIDPayl
     // DB logic
 
     // DB operation
-    const flightEvent = await db.models.Message.findById(payload.id);
+    const flightEvent = await db.models.FlightEvent.findById(payload.id);
 
     // Response
     return flightEvent;
@@ -45,7 +45,7 @@ export const updateFlightEventByIDInDB = async (payload: UpdateFlightEventPayloa
     // DB logic
 
     // DB operation
-    const flightEvent = await db.models.Message.findByIdAndUpdate(payload._id, payload);
+    const flightEvent = await db.models.FlightEvent.findByIdAndUpdate(payload._id, payload);
 
     // Response
     return flightEvent;
@@ -56,7 +56,7 @@ export const deleteFlightEventByIDInDB = async (payload: DeleteFlightEventPayloa
     // DB logic
 
     // DB operation
-    const flightEvent = await db.models.Message.findByIdAndDelete(payload._id);
+    const flightEvent = await db.models.FlightEvent.findByIdAndDelete(payload._id);
 
     // Response
     return flightEvent;

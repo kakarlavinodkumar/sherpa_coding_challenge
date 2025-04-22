@@ -1,5 +1,5 @@
 import { updateFlightByIDInDB } from "../../flight/db/dbservice";
-import { deleteFlightEventByIDInDB, fetchFlightEventByIDFromDB, fetchFlightEventsByFlightIDFromDB, saveFlightEventToDB } from "../db/dbservice";
+import { deleteFlightEventByIDInDB, fetchFlightEventByIDFromDB, fetchFlightEventsByFlightIDFromDB, saveFlightEventToDB, updateFlightEventByIDInDB } from "../db/dbservice";
 import { CreateFlightEventPayload, CreateFlightEventResponse, DeleteFlightEventPayload, DeleteFlightEventResponse, GetFlightEventByIDPayload, GetFlightEventByIDResponse, GetFlightEventsPayload, GetFlightEventsResponse, UpdateFlightEventPayload, UpdateFlightEventResponse } from "../struct";
 
 // Create Flight Event
@@ -29,7 +29,7 @@ export const GetFlightEventsService = async (payload: GetFlightEventsPayload): P
 
     // Payload validation
     if(!flight_id) {
-        throw new Error("All fields are required");
+        throw new Error("Flight id is required");
     }
 
     // Business Logic
@@ -71,11 +71,11 @@ export const UpdateFlightEventService = async (payload: UpdateFlightEventPayload
     // Business Logic
 
     // DB Call
-    const result = await updateFlightByIDInDB(payload);
+    await updateFlightEventByIDInDB(payload);
 
     // Response
     return {
-        _id: result.id,
+        _id: payload._id,
         message: "Flight event updated successfully"
     };
 }
@@ -92,12 +92,6 @@ export const DelteFlightEventService = async (payload: DeleteFlightEventPayload)
     // Business Logic
 
     // DB Call
-    const result = await fetchFlightEventByIDFromDB({ id: _id });
-    if (!result) {
-        throw new Error("Flight event not found");
-    }
-
-    // Assuming a deleteFlightEventFromDB function exists in the DB service
     await deleteFlightEventByIDInDB(payload);
 
     // Response

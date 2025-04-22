@@ -1,6 +1,6 @@
 import express from "express";
 import { CreateFlightEventPayload, CreateFlightEventResponse, DeleteFlightEventPayload, DeleteFlightEventResponse, GetFlightEventByIDPayload, GetFlightEventsPayload, GetFlightEventsResponse, UpdateFlightEventPayload, UpdateFlightEventResponse } from "../struct";
-import { CreateFlightEventService, GetFlightEventByIDService, GetFlightEventsService, UpdateFlightEventService } from "../service/flighteventservice";
+import { CreateFlightEventService, DelteFlightEventService, GetFlightEventByIDService, GetFlightEventsService, UpdateFlightEventService } from "../service/flighteventservice";
 import { HTTP_RESPONSE_CODES } from "../../../appconstants/httpresponsecodes";
 import { deleteFlightService } from "../../flight/service/flightservice";
 
@@ -36,10 +36,12 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/:flightID", async (req, res) => {
+router.get("/:flightEventID", async (req, res) => {
     try {
         // Paylod
-        const payload: GetFlightEventByIDPayload = <any>req.query;
+        const payload: GetFlightEventByIDPayload = { 
+            id: req.params.flightEventID 
+        };
 
         // Service call
         const response: GetFlightEventsResponse[] = await GetFlightEventByIDService(payload);
@@ -74,7 +76,7 @@ router.delete("/", async (req, res) => {
         const payload: DeleteFlightEventPayload = req.body;
 
         // Service call
-        const response: DeleteFlightEventResponse = await deleteFlightService(payload);
+        const response: DeleteFlightEventResponse = await DelteFlightEventService(payload);
 
         // Response
         return res.json(response);
