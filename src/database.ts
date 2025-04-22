@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import {join} from "path"
+import { ref } from "process"
 import {Database} from "sqlite3"
 
 let db: Database
@@ -39,6 +40,18 @@ export const getMongoDBConnection = (): mongoose.Connection => {
 
     if(!mongoose.models.Message) {
         mongoose.model('Message', MessageSchema);
+    }
+
+    const FlightEventSchema = new mongoose.Schema({
+        flight_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Flight'},
+        event_type: { type: String, required: true},
+        event_name: { type: String, required: true},
+        time: { type: Date, required: true},
+        status: { type: String, enum: ["Completed", "Paused", "Pending"], required: true }
+    }, { timestamps : true });
+
+    if(!mongoose.models.FlightEvent) {
+        mongoose.model("FlightEvent", FlightEventSchema);
     }
 
     mongoose.connect(uri)
