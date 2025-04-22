@@ -185,3 +185,5 @@ router.delete("/", async (req, res) => {
         res.status(err.code || HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: err.message ||  "Bad request" });
     }
 });
+
+export default router;

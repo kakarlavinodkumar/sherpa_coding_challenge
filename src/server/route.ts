@@ -2,6 +2,8 @@
 import express from "express"
 import eventRoute from "./event/api/route"
 import flightRoutes from "./flight/api/route";
+import messageRoutes from "./message/api/route";
+import flightEventRoutes from "./flightevent/api/route";
 
 const router = express.Router();
 
@@ -9,7 +11,9 @@ const router = express.Router();
 // app.use("/event", isAuthorized)
 // routing for event api's
 router.use("/events", eventRoute);
-router.use("/flights", flightRoutes)
+router.use("/flights", flightRoutes);
+router.use("/message", messageRoutes);
+router.use("/flightevent", flightEventRoutes);
 // router.use("/another_route", anotherRoute); 
 
 export default router;
