@@ -21,7 +21,6 @@ export const FlightEventsConsumer = () => {
             },
         });
     } catch (err: any) {
-        const statusCode = typeof err.code === "number" ? err.code : 500;
         throw err;
     } finally {
  
