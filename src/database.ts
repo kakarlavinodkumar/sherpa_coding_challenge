@@ -46,7 +46,7 @@ export const getMongoDBConnection = (): mongoose.Connection => {
         flight_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Flight'},
         event_type: { type: String, required: true},
         event_name: { type: String, required: true},
-        time: { type: Date, required: true},
+        time: { type: String, required: true},
         status: { type: String, enum: ["Completed", "Paused", "Pending"], required: true }
     }, { timestamps : true });
 
