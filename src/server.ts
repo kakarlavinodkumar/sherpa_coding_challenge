@@ -7,10 +7,11 @@ import {getDBConnection} from "./database";
 import masterRouter from "./server/route"
 import { SWAGGER_SCHEMA } from "./swagger/schema";
 import { BASE_PATH } from "./appconstants/constants";
+import { FlightEventsConsumer } from "./server/azureeventbus/service/azureeventbuservice";
 
 export const start = async (): Promise<Server> => new Promise(async (resolve, reject) => {
     try {
-        const port = 4040
+        const port = 4041
         
         const app = express();
         app.use(express.json());
@@ -50,6 +51,8 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
             res.send("Hello");
         })
         
+        FlightEventsConsumer();
+
         const server = app.listen(port, () => {
             console.log(`Example app listening at http://localhost:${port}`)
             resolve(server)
