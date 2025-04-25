@@ -54,6 +54,18 @@ export const getMongoDBConnection = (): mongoose.Connection => {
         mongoose.model("FlightEvent", FlightEventSchema);
     }
 
+    const FlightEventLogSchema = new mongoose.Schema({
+        flight_id: { type: String, required: true },
+        event_status: { type: String, enum: ["paused", "sent"] },
+        event_type: { type: String },
+        event_name: { type: String },
+        event_time: { type: String }
+    }, { timestamps : true });
+
+    if(!mongoose.models.FlightEventLog) {
+        mongoose.model("FlightEventLog", FlightEventLogSchema);
+    }
+
     mongoose.connect(uri)
         .then(() => 
         {
