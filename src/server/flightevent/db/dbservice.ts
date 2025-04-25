@@ -1,5 +1,6 @@
+import { FLIGHT_EVENT_STATUS_PAUSED } from "../../../appconstants/constants";
 import { getMongoDBConnection } from "../../../database";
-import { CreateFlightEventPayload, CreateFlightEventResponse, DeleteFlightEventPayload, GetFlightEventByIDPayload, GetFlightEventsPayload, UpdateFlightEventPayload } from "../struct";
+import { CreateFlightEventPayload, CreateFlightEventResponse, DeleteFlightEventPayload, GetFlightEventByIDPayload, GetFlightEventsByFilterPayload, GetFlightEventsPayload, UpdateFlightEventPayload } from "../struct";
 
 const db = getMongoDBConnection();
 
@@ -61,3 +62,30 @@ export const deleteFlightEventByIDInDB = async (payload: DeleteFlightEventPayloa
     // Response
     return flightEvent;
 };
+
+// Get Flight Event by filters
+export const getFlightEventByFiltersInDB = async (payload: GetFlightEventsByFilterPayload) => {
+    // DB logic
+    const filters: any = {
+        event_type: payload.event_type,
+        event_name: payload.event_name,
+        time: payload.event_time,
+        status: FLIGHT_EVENT_STATUS_PAUSED
+    }
+
+    // DB operation
+    const flightEvent = await db.models.FlightEvent.findOne(filters)
+    .populate({
+        path: "flight_id",
+        match: {
+            flightNumber: payload.flight_number,
+            departure: payload.departure_from,
+            destination: payload.arrival_to,
+            departureTime: payload.local_departure_date_time,
+            arrivalTime: payload.local_arrival_date_time
+        }
+    })
+
+    // Response
+    return flightEvent;
+}

@@ -1,6 +1,6 @@
 import { updateFlightByIDInDB } from "../../flight/db/dbservice";
-import { deleteFlightEventByIDInDB, fetchFlightEventByIDFromDB, fetchFlightEventsByFlightIDFromDB, saveFlightEventToDB, updateFlightEventByIDInDB } from "../db/dbservice";
-import { CreateFlightEventPayload, CreateFlightEventResponse, DeleteFlightEventPayload, DeleteFlightEventResponse, GetFlightEventByIDPayload, GetFlightEventByIDResponse, GetFlightEventsPayload, GetFlightEventsResponse, UpdateFlightEventPayload, UpdateFlightEventResponse } from "../struct";
+import { deleteFlightEventByIDInDB, fetchFlightEventByIDFromDB, fetchFlightEventsByFlightIDFromDB, getFlightEventByFiltersInDB, saveFlightEventToDB, updateFlightEventByIDInDB } from "../db/dbservice";
+import { CreateFlightEventPayload, CreateFlightEventResponse, DeleteFlightEventPayload, DeleteFlightEventResponse, GetFlightEventByIDPayload, GetFlightEventByIDResponse, GetFlightEventsByFilterPayload, GetFlightEventsPayload, GetFlightEventsResponse, UpdateFlightEventPayload, UpdateFlightEventResponse } from "../struct";
 
 // Create Flight Event
 export const CreateFlightEventService = async (payload: CreateFlightEventPayload): Promise<CreateFlightEventResponse> => {
@@ -99,4 +99,29 @@ export const DelteFlightEventService = async (payload: DeleteFlightEventPayload)
         _id,
         message: "Flight event deleted successfully"
     };
+}
+
+export const GetFlightEventByFiltersService = async (payload: GetFlightEventsByFilterPayload) => {
+    // Payload destructuring
+    const { 
+        flight_number,
+        departure_from,
+        arrival_to,
+        local_departure_date_time,
+        local_arrival_date_time,
+        event_type,
+        event_name,
+        event_time 
+    } = payload;
+
+    // Payload validation
+    if (!flight_number || !departure_from || !arrival_to || !local_departure_date_time || !local_arrival_date_time || !event_type || !event_name || !event_time) {
+        throw new Error("All the fields are required");
+    }
+
+    // DB Call
+    const result: any  = await getFlightEventByFiltersInDB(payload);
+    
+    // response
+    return result;
 }
