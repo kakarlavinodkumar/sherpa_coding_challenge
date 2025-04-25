@@ -1,2 +1,3 @@
 export const WEATHER_API_END_POINT = 'http://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${city}&days=7&aqi=no&alerts=no';
-export const BASE_PATH = process.env.BASE_PATH ||'http://localhost:4041'
+export const BASE_PATH = process.env.BASE_PATH ||'http://localhost:4041';
+export const FLIGHT_EVENT_STATUS_PAUSED = 'Paused';
