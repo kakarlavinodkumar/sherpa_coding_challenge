@@ -83,7 +83,8 @@ export const getFlightEventByFiltersInDB = async (payload: GetFlightEventsByFilt
             destination: payload.arrival_to,
             departureTime: payload.local_departure_date_time,
             arrivalTime: payload.local_arrival_date_time
-        }
+        },
+        options: { strictPopulate: true }
     })
 
     // Response
